@@ -11,12 +11,12 @@ std::unique_ptr<Application> Application::mInstance = nullptr;
 std::once_flag Application::mOnceFlag;
 std::mutex Application::mWindowMutex;
 
-std::unique_ptr<Application> Application::getInstance()
+Application &Application::getInstance()
 {
         std::call_once(mOnceFlag, []() {
                 mInstance = std::unique_ptr<Application>(new Application());
         });
-        return std::move(mInstance);
+        return *mInstance;
 }
 
 void Application::test()
@@ -71,11 +71,10 @@ bool Application::init(const u32 &&width, const u32 &&height, const std::string 
                 this->close();
                 return false;
         }
+        glfwSetWindowUserPointer(this->mWindow, this);
 
-        // opengl渲染的区域
-        GL_CHECK_ERR(glViewport(0, 0, width, height));
-        // 设置清屏颜色
-        GL_CHECK_ERR(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
+        glfwSetFramebufferSizeCallback(this->mWindow, resizeCallback);
+        glfwSetKeyCallback(this->mWindow, keyCallback);
 
         return true;
 }
@@ -95,6 +94,7 @@ bool Application::init(const u32 &&width, const u32 &&height, const std::string 
         glfwPollEvents();
         // 双缓冲绘制，交替绘制缓冲区
         glfwSwapBuffers(this->mWindow);
+
         return true;
 }
 
@@ -110,6 +110,33 @@ void Application::close()
         this->mTitle = "";
         this->mInit = false;
         glfwTerminate();
+}
+
+void Application::resizeCallback(GLFWwindow *window, int width, int height)
+{
+        auto self = static_cast<Application *>(glfwGetWindowUserPointer(window));
+        if (self == nullptr) {
+                return;
+        }
+
+        self->mWidth = width;
+        self->mHeight = height;
+
+        if (self->mResizeCallback) {
+                self->mResizeCallback(window, width, height);
+        }
+}
+
+void Application::keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+        auto self = static_cast<Application *>(glfwGetWindowUserPointer(window));
+        if (self == nullptr) {
+                return;
+        }
+
+        if (self->mKeyCallback) {
+                self->mKeyCallback(window, key, scancode, action, mods);
+        }
 }
 
 Application::~Application()
