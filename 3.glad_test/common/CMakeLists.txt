@@ -6,5 +6,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # 添加库源文件
 add_library(common STATIC
-        src/*.cpp
+        ./src/check_err.cpp
 )
