@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(glfw_test)
 
-find_package(glfw3 REQUIRED)
+#find_package(glfw3 REQUIRED)
 
 include_directories(
         SYSTEM ../thirdParty/include

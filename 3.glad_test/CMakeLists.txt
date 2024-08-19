@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 project(glfw_test)
 
-find_package(glfw3 REQUIRED)
+#find_package(glfw3 REQUIRED)
 
-set(INCLUDE_DIRS "/home/shao/opengl_projects/thirdParty/include")
-set(LIBRARY_DIRS "/home/shao/opengl_projects/thirdParty/lib")
-set(GLAD_PATH "/home/shao/opengl_projects/glad.c")
+set(INCLUDE_DIRS "../thirdParty/include")
+set(LIBRARY_DIRS "../thirdParty/lib")
+set(GLAD_PATH "../glad.c")
 
 add_definitions(-DDEBUG_MODE)
 

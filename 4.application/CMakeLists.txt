@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(glfw_test)
 
-find_package(glfw3 REQUIRED)
+#find_package(glfw3 REQUIRED)
 
-set(ROOT_PATH "/home/shao/opengl_projects")
+set(ROOT_PATH "../")
 set(COMMON_INCLUDE "./common/include")
 set(INCLUDE_DIRS "${ROOT_PATH}/thirdParty/include")
 set(LIBRARY_DIRS "${ROOT_PATH}/thirdParty/lib")
