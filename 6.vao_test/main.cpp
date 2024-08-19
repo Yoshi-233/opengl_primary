@@ -27,44 +27,6 @@ void OnKeyBoard(GLFWwindow *window, int key, int scancode, int action, int mode)
         }
 }
 
-void prepareVBO()
-{
-        GLuint vbo = 0;
-        GL_CHECK_ERR(glGenBuffers(1, &vbo));
-        std::cout << vbo << std::endl;
-        GL_CHECK_ERR(glDeleteBuffers(1, &vbo));
-        std::cout << vbo << std::endl;
-
-        GLuint vbo_arr[3] = {0};
-        GL_CHECK_ERR(glGenBuffers(3, vbo_arr));
-        std::cout << vbo_arr[0] << vbo_arr[1] << vbo_arr[2] << std::endl;
-        GL_CHECK_ERR(glDeleteBuffers(1, vbo_arr + 2));
-
-        GL_CHECK_ERR(glGenBuffers(1, &vbo));
-        std::cout << vbo << std::endl;
-        GL_CHECK_ERR(glDeleteBuffers(1, &vbo));
-
-        std::cout << vbo_arr[0] << vbo_arr[1] << vbo_arr[2] << std::endl;
-        GL_CHECK_ERR(glDeleteBuffers(2, vbo_arr));
-}
-
-void prepare()
-{
-        float vertices[] = {
-                -0.5f, -0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f,
-                0.0f,0.5f, 0.0f
-        };
-        GLuint vbo = 0;
-        GL_CHECK_ERR(glGenBuffers(1, &vbo));
-        // GL_ARRAY_BUFFER current vbo
-        GL_CHECK_ERR(glBindBuffer(GL_ARRAY_BUFFER, vbo));
-        GL_CHECK_ERR(glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW));
-
-        GL_CHECK_ERR(glDeleteBuffers(1, &vbo));
-
-}
-
 void prepareSingleBuffer()
 {
         float position[] = {
@@ -82,11 +44,32 @@ void prepareSingleBuffer()
         GL_CHECK_ERR(glGenBuffers(1, &posVbo));
         GL_CHECK_ERR(glGenBuffers(1, &colorVbo));
 
+
         // GL_ARRAY_BUFFER current vbo
         GL_CHECK_ERR(glBindBuffer(GL_ARRAY_BUFFER, posVbo));
         GL_CHECK_ERR(glBufferData(GL_ARRAY_BUFFER, sizeof(position), position, GL_STATIC_DRAW));
+
         GL_CHECK_ERR(glBindBuffer(GL_ARRAY_BUFFER, colorVbo));
         GL_CHECK_ERR(glBufferData(GL_ARRAY_BUFFER, sizeof(color), color, GL_STATIC_DRAW));
+
+        /* vao */
+        GLuint vao = 0;
+        GL_CHECK_ERR(glGenVertexArrays(1, &vao));
+        GL_CHECK_ERR(glBindVertexArray(vao));
+
+        // must use bind
+        GL_CHECK_ERR(glBindBuffer(GL_ARRAY_BUFFER, posVbo));
+        GL_CHECK_ERR(glEnableVertexAttribArray(0)); // enable vao 0th attr
+        GL_CHECK_ERR(glad_glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+                                                3 * sizeof(float), (void *)0));
+        GL_CHECK_ERR(glBindBuffer(GL_ARRAY_BUFFER, colorVbo));
+        GL_CHECK_ERR(glEnableVertexAttribArray(1)); // enable vao 0th attr
+        GL_CHECK_ERR(glad_glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
+                                                3 * sizeof(float), (void *)0));
+
+        // unbind
+        GL_CHECK_ERR(glBindVertexArray(0));
+        GL_CHECK_ERR(glDeleteVertexArrays(1, &vao));
 
         GL_CHECK_ERR(glDeleteBuffers(1, &posVbo));
         GL_CHECK_ERR(glDeleteBuffers(1, &colorVbo));
@@ -96,9 +79,9 @@ void prepareSingleBuffer()
 void prepareInterleaveBuffer()
 {
         float vertices[] = {
-                -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-                0.5f, -0.5f, 0.0f, 0.5f, 1.0f, 0.0f,
-                0.0f, 0.5f,  0.0f, 0.0f, 0.0f, 1.0f
+                -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+                0.5f, -0.5f, 0.0f, 0.5f, 1.0f, 0.0f,  1.0f, 0.0f, 0.0f,
+                0.0f, 0.5f,  0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
         };
 
         GLuint vbo = 0;
@@ -107,6 +90,27 @@ void prepareInterleaveBuffer()
         // GL_ARRAY_BUFFER current vbo
         GL_CHECK_ERR(glBindBuffer(GL_ARRAY_BUFFER, vbo));
         GL_CHECK_ERR(glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW));
+
+        /* vao */
+        GLuint vao = 0;
+        GL_CHECK_ERR(glGenVertexArrays(1, &vao));
+        GL_CHECK_ERR(glBindVertexArray(vao));
+
+        // must use bind
+        GL_CHECK_ERR(glBindBuffer(GL_ARRAY_BUFFER, vbo));
+        GL_CHECK_ERR(glEnableVertexAttribArray(0)); // enable vao 0th attr
+        GL_CHECK_ERR(glad_glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+                                                9 * sizeof(float), (void *)0));
+        GL_CHECK_ERR(glEnableVertexAttribArray(1)); // enable vao 1th attr color
+        GL_CHECK_ERR(glad_glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
+                                                9 * sizeof(float), (void *)(3 * sizeof(float))));
+        GL_CHECK_ERR(glEnableVertexAttribArray(2)); // enable vao 1th attr uv
+        GL_CHECK_ERR(glad_glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
+                                                9 * sizeof(float), (void *)(7 * sizeof(float))));
+
+        // unbind
+        GL_CHECK_ERR(glBindVertexArray(0));
+        GL_CHECK_ERR(glDeleteVertexArrays(1, &vao));
 
         GL_CHECK_ERR(glDeleteBuffers(1, &vbo));
 
