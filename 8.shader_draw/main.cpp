@@ -115,6 +115,42 @@ void prepareInterleaveBuffer()
 
 }
 
+void prepareVAOForGLTriangles()
+{
+        float positon[] = {
+                -0.5f, -0.5f, 0.0f,
+                0.5f, -0.5f, 0.0f,
+                0.0f, 0.5f,  0.0f,
+                0.5f, 0.5f, 0.0f,
+                0.8f, 0.8f, 0.0f,
+                0.8f, 0.0f, 0.0f
+        };
+
+        GLuint posVbo = 0;
+        GL_CHECK_ERR(glGenBuffers(1, &posVbo));
+
+        // GL_ARRAY_BUFFER current vbo
+        GL_CHECK_ERR(glBindBuffer(GL_ARRAY_BUFFER, posVbo));
+        GL_CHECK_ERR(glBufferData(GL_ARRAY_BUFFER, sizeof(positon), positon, GL_STATIC_DRAW));
+
+        /* vao */
+        GL_CHECK_ERR(glGenVertexArrays(1, &vao));
+        GL_CHECK_ERR(glBindVertexArray(vao));
+
+        // must use bind
+        GL_CHECK_ERR(glBindBuffer(GL_ARRAY_BUFFER, posVbo));
+        GL_CHECK_ERR(glEnableVertexAttribArray(0)); // enable vao 0th attr
+        GL_CHECK_ERR(glad_glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+                                                3 * sizeof(float), (void *)0));
+
+        // unbind
+        GL_CHECK_ERR(glBindVertexArray(0));
+//        GL_CHECK_ERR(glDeleteVertexArrays(1, &vao));
+//
+//        GL_CHECK_ERR(glDeleteBuffers(1, &vbo));
+
+}
+
 void prepareShader()
 {
         const char* vertexShaderSource =
@@ -180,7 +216,10 @@ void render()
         GL_CHECK_ERR(glClear(GL_COLOR_BUFFER_BIT));
         glUseProgram(program);
         glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+//        glDrawArrays(GL_TRIANGLES, 0, 3);
+//        glDrawArrays(GL_TRIANGLES, 0, 6);
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+        glDrawArrays(GL_TRIANGLE_STRIP, 1, 6);
 }
 
 int main()
@@ -201,7 +240,8 @@ int main()
 
         prepareShader();
         prepareSingleBuffer();
-        prepareInterleaveBuffer();
+//        prepareInterleaveBuffer();
+        prepareVAOForGLTriangles();
 
         while (APP.update()) {
                 render();

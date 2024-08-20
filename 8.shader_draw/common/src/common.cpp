@@ -17,7 +17,7 @@ void log_init()
         // %# - 源行号
         // %! - 函数名
         // 更多格式化选项请查看spdlog文档
-        log_console->set_pattern("[%H:%M:%S %z][%^%L%$][%s][%!:%#] %v");
+        log_console->set_pattern("[%^%L%$][%H:%M:%S %z][%s][%!:%#] %v");
         spdlog::set_default_logger(log_console);
 
         // 使用记录器
