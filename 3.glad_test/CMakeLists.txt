@@ -5,7 +5,7 @@ project(glfw_test)
 
 set(INCLUDE_DIRS "../thirdParty/include")
 set(LIBRARY_DIRS "../thirdParty/lib")
-set(GLAD_PATH "../glad.c")
+set(GLAD_PATH "../thirdParty/glad.c")
 
 add_definitions(-DDEBUG_MODE)
 

@@ -10,7 +10,7 @@ set(ROOT_PATH "../")
 set(COMMON_INCLUDE "./common/include")
 set(INCLUDE_DIRS "${ROOT_PATH}/thirdParty/include")
 set(LIBRARY_DIRS "${ROOT_PATH}/thirdParty/lib")
-set(GLAD_PATH "${ROOT_PATH}/glad.c")
+set(GLAD_PATH "${ROOT_PATH}/thirdParty/glad.c")
 
 add_definitions(-DDEBUG_MODE)
 

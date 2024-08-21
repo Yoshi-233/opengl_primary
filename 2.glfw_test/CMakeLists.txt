@@ -11,6 +11,6 @@ link_directories(
         ../thirdParty/lib
 )
 
-add_executable(glfw_test main.cpp ../glad.c)
+add_executable(glfw_test main.cpp ../thirdParty/glad.c)
 
 target_link_libraries(glfw_test libglfw3.a GL m Xrandr Xi X11 Xxf86vm pthread dl Xinerama Xcursor)
