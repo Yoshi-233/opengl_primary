@@ -71,10 +71,10 @@ void prepareVao()
         /* bind vbo/ebo */
         glBindBuffer(GL_ARRAY_BUFFER, posVbo);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void *)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void *) 0);
         glBindBuffer(GL_ARRAY_BUFFER, colorVbo);
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void *)0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void *) 0);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
@@ -83,7 +83,8 @@ void prepareVao()
 
 void prepareShader()
 {
-        shader = new Shader("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
+        shader = new Shader("assets/shaders/vertex.glsl",
+                            "assets/shaders/fragment.glsl");
 }
 
 void render()
@@ -102,7 +103,7 @@ int main()
 {
         cpp_init();
         if (!APP.init(800, 600, "LearnOpenGL")) {
-                ERROR( "Failed to initialize Application");
+                ERROR("Failed to initialize Application");
                 return -1;
         }
 
