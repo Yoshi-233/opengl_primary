@@ -8,9 +8,9 @@
 #include <fstream>
 #include <sstream>
 
-Shader* shader = nullptr;
+Shader *shader = nullptr;
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath)
+Shader::Shader(const char *vertexPath, const char *fragmentPath)
 {
         // code
         std::string vertexCode;
@@ -58,8 +58,8 @@ void Shader::end()
 
 void Shader::setProgram(std::string &vertexCode, std::string &fragmentCode)
 {
-        const char* vertexShaderSource = vertexCode.c_str();
-        const char* fragmentShaderSource = fragmentCode.c_str();
+        const char *vertexShaderSource = vertexCode.c_str();
+        const char *fragmentShaderSource = fragmentCode.c_str();
         /* create shader */
         GLuint vertexShader, fragmentShader;
         vertexShader = GL_CHECK_ERR(glCreateShader(GL_VERTEX_SHADER));
@@ -91,15 +91,15 @@ void Shader::checkShaderErrors(GLuint target, std::string &&type) const
 {
         int success = 0;
         char infoLog[1024];
-        if(type == "COMPILE") {
+        if (type == "COMPILE") {
                 glGetShaderiv(target, GL_COMPILE_STATUS, &success);
-                if(!success) {
+                if (!success) {
                         glGetShaderInfoLog(target, 1024, nullptr, infoLog);
                         ERROR(infoLog);
                 }
-        } else if(type == "LINK") {
+        } else if (type == "LINK") {
                 glGetProgramiv(this->mProgram, GL_LINK_STATUS, &success);
-                if(!success) {
+                if (!success) {
                         glGetProgramInfoLog(this->mProgram, 1024, nullptr, infoLog);
                         ERROR(infoLog);
                 }

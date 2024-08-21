@@ -18,8 +18,7 @@ class GLFWwindow;
 using ResizeCallback = void (*)(GLFWwindow *, int, int);
 using KeyCallback = void (*)(GLFWwindow *, int, int, int, int);
 
-class Application
-{
+class Application {
 public:
         ~Application();
 
@@ -41,6 +40,7 @@ public:
         /* 回调函数 */
         void setResizeCallback(ResizeCallback callback)
         { mResizeCallback = callback; }
+
         void setKeyCallback(KeyCallback callback)
         { mKeyCallback = callback; }
 
@@ -65,6 +65,7 @@ private:
 
         // 这里必须是static的，否则是类内调用了
         static void resizeCallback(GLFWwindow *window, int width, int height);
+
         static void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
 private:
