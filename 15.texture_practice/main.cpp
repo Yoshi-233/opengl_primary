@@ -45,20 +45,22 @@ void prepareVao()
         float positions[] = {
                 -0.5f, -0.5f, 0.0f,
                 0.5f, -0.5f, 0.0f,
-                0.0f, 0.5f, 0.0f,
+                -0.5f, 0.5f, 0.0f,
                 0.5f, 0.5f, 0.0f
         };
 
         float colors[] = {
                 1.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 1.0f
+                0.0f, 0.0f, 1.0f,
+                0.5f, 0.5f, 0.5f
         };
 
         float uvs[] = {
                 0.0f, 0.0f,
-                1.0f, 0.0f,
-                0.5f, 1.0f
+                2.0f, 0.0f,
+                0.0f, 1.0f,
+                3.0f, 1.0f
         };
 
         u32 indices[] = {
@@ -160,7 +162,7 @@ void render()
         // 设置sampler采样第0号纹理，注意这里默认是0
         shader->setInt("sampler", 0);
         glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         // 这里最好解绑，这样误操作就不会影响当前vao
         Shader::end();
 }
