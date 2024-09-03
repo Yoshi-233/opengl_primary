@@ -1,5 +1,6 @@
 #include "glframework/include/core.h"
 #include "glframework/include/shader.h"
+#include "glframework/include/texture.h"
 #include "application/Application.h"
 #include "common/include/check_err.h"
 #include "common/include/common.h"
