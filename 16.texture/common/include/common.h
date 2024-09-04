@@ -6,6 +6,7 @@
 #define GLFW_TEST_COMMON_H
 
 #include <iostream>
+#include <string>
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 #include "spdlog/sinks/stdout_color_sinks.h"

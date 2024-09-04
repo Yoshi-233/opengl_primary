@@ -11,11 +11,17 @@
 
 class Texture {
 public:
-        Texture();
+        Texture(const std::string& path, u32 unit);
+
         ~Texture();
+public:
+        void bind() const;
+
 private:
         GLuint mTexture{0};
-
+        s32 mWidth{0};
+        s32 mHeight{0};
+        u32 mUnit{0}; // GL_TEXTURE0 + mUnit 表示绑定的纹理单元
 };
 
 #endif //TEXTURE_TEXTURE_H

@@ -4,11 +4,6 @@
 #include "application/Application.h"
 #include "common/include/check_err.h"
 #include "common/include/common.h"
-
-#define STB_IMAGE_IMPLEMENTATION
-
-#include "stb_image.h"
-
 /*
  * 1. load image
  * 2. create texture object
@@ -16,7 +11,7 @@
  * */
 
 GLuint vao = 0;
-GLuint texture = 0;
+std::shared_ptr<Texture> texture;
 
 // 窗口大小改变回调函数
 void OnResize(GLFWwindow *window, int width, int height)
@@ -115,43 +110,7 @@ void prepareShader()
 
 void prepareTexture()
 {
-        s32 width, height, channels;
-        /* 1. 读取图片时要反转y轴 */
-        stbi_set_flip_vertically_on_load(true);
-        u8 *data = stbi_load("assets/textures/dog_1.jpg",
-                             &width, &height, &channels, STBI_rgb_alpha);
-        INFO("width: {}, height: {}, channels: {}.\n", width, height, channels);
-
-        /* 2. 生成1个纹理对象 */
-        glGenTextures(1, &texture);
-        /* 激活纹理单元 */
-        glActiveTexture(GL_TEXTURE0); // 激活0号纹理
-        /* 绑定纹理对象，为2D纹理， 如果后续再绑定别的纹理会替换当前纹理 */
-        glBindTexture(GL_TEXTURE_2D, texture);
-
-        /* 3.传输纹理数据到gpu, 该行为会开辟显存 */
-        // param0: 2d texture
-        // param1: level = 0表示单层纹理
-        // param2: format, gpu上的图片格式
-        // param7: 传入图片的数据格式
-        // param8: 传入图片的数据格式的存储格式
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
-                     0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-        /* 4.释放数据， 传输完纹理数据后需要释放data */
-        stbi_image_free(data);
-
-        /* 5.设置纹理过滤方式 */
-        // 正常情况下，当需要的像素大于原始image, GL_LINEAR, else GL_NEAREST
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-        /* 6.设置纹理wraping方式 */
-        // GL_TEXTURE_WRAP_S = u, GL_TEXTURE_WRAP_T = v
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-        // 注意这里不能使用glBindTexture(GL_TEXTURE_2D, 0);解绑
+        texture = std::make_shared<Texture>("assets/textures/dog_1.jpg", 0);
 }
 
 void render()
