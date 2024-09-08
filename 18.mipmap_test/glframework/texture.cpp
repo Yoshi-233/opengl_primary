@@ -39,7 +39,7 @@ Texture::Texture(const std::string &path, unsigned int unit)
         for(int i = 0; ; i++) {
                 // 这里的data共用一张图片，实际上并没有进行缩放
                 glTexImage2D(GL_TEXTURE_2D, i, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-                if(width == 1 || height == 1) {
+                if(width == 1 && height == 1) {
                         break;
                 }
                 width = width > 1 ? width / 2 : 1;

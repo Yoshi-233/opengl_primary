@@ -39,7 +39,7 @@ Texture::Texture(const std::string &path, unsigned int unit)
         for(int i = 0; ; i++) {
                 // 这里的data共用一张图片，实际上并没有进行缩放
                 glTexImage2D(GL_TEXTURE_2D, i, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-                if(width == 1 || height == 1) {
+                if(width == 1 && height == 1) {
                         break;
                 }
                 width = width > 1 ? width / 2 : 1;
@@ -55,7 +55,7 @@ Texture::Texture(const std::string &path, unsigned int unit)
         // 这里如果想用mipmap, 则需要设置GL_TEXTURE_MIN_FILTER为GL_LINEAR_MIPMAP_LINEAR, 否则为GL_NEAREST
         // GL_LINEAR是在单个mipmap层级上进行线性插值，GL_NEAREST是在单个mipmap层级上进行最近邻插值
         // MIPMAP_LINEAR是在所有mipmap层级上进行线性插值
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
         /* 6.设置纹理wraping方式 */
         // GL_TEXTURE_WRAP_S = u, GL_TEXTURE_WRAP_T = v
