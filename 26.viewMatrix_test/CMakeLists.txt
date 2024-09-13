@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-set(PROJ_NAME "glm_superpose_test")
+set(PROJ_NAME "viewMatrix_test")
 project(${PROJ_NAME})
 
 # 外部资源copy cmake
