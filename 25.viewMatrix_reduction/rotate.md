@@ -1,1 +1,0 @@
-$$x = \frac{1}{2} \left( \frac{1}{2} x_1 + \frac{1}{2} x_2 \right)$$
