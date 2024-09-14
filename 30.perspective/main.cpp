@@ -34,7 +34,7 @@ void OnResize(GLFWwindow *window, int width, int height)
  * int action：键的动作，如按下或释放
  * int mode：当前窗口的输入模式， 如shift、ctrl等
  * */
-float y = 0.0;
+float z = 0.0;
 float x = 0.0;
 
 void OnKeyBoard(GLFWwindow *window, int key, int scancode, int action, int mode)
@@ -45,23 +45,27 @@ void OnKeyBoard(GLFWwindow *window, int key, int scancode, int action, int mode)
         }
 
         if (key == GLFW_KEY_W) {
-                y++;
-                viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f + 0.2f * (float) y, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+                z--;
+                viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f + 0.2f * (float) z),
+                                         glm::vec3(0.0f, 0.0f, 0.0f),
                                          glm::vec3(0.0f, 1.0f, 0.0f));
         }
         if (key == GLFW_KEY_S) {
-                y--;
-                viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f + 0.2f * (float) y, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+                z++;
+                viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f + 0.2f * (float) z),
+                                         glm::vec3(0.0f, 0.0f, 0.0f),
                                          glm::vec3(0.0f, 1.0f, 0.0f));
         }
         if (key == GLFW_KEY_A) {
                 x--;
-                viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+                viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f + 0.2f * (float) z),
+                                         glm::vec3(0.0f, 0.0f, 0.0f),
                                          glm::vec3(0.0f, 1.0f, 0.0f));
         }
         if (key == GLFW_KEY_D) {
                 x++;
-                viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+                viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f + 0.2f * (float) z),
+                                         glm::vec3(0.0f, 0.0f, 0.0f),
                                          glm::vec3(0.0f, 1.0f, 0.0f));
         }
 }
