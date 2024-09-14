@@ -34,11 +34,35 @@ void OnResize(GLFWwindow *window, int width, int height)
  * int action：键的动作，如按下或释放
  * int mode：当前窗口的输入模式， 如shift、ctrl等
  * */
+float y = 0.0;
+float x = 0.0;
+
 void OnKeyBoard(GLFWwindow *window, int key, int scancode, int action, int mode)
 {
         if ((key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) ||
             (key == GLFW_KEY_C && action == GLFW_RELEASE && mode == GLFW_MOD_CONTROL)) {
                 glfwSetWindowShouldClose(window, GLFW_TRUE);
+        }
+
+        if (key == GLFW_KEY_W) {
+                y++;
+                viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f + 0.2f * (float) y, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+                                         glm::vec3(0.0f, 1.0f, 0.0f));
+        }
+        if (key == GLFW_KEY_S) {
+                y--;
+                viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f + 0.2f * (float) y, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+                                         glm::vec3(0.0f, 1.0f, 0.0f));
+        }
+        if (key == GLFW_KEY_A) {
+                x--;
+                viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+                                         glm::vec3(0.0f, 1.0f, 0.0f));
+        }
+        if (key == GLFW_KEY_D) {
+                x++;
+                viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+                                         glm::vec3(0.0f, 1.0f, 0.0f));
         }
 }
 
@@ -129,7 +153,7 @@ void prepareCamera()
          * center:当前摄像机看见的点(世界坐标)
          * up:穹顶向量
          * */
-        viewMatrix = glm::lookAt(glm::vec3(3.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+        viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
                                  glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
@@ -142,7 +166,7 @@ void preparePerspective()
          * near/far:近远平面，必须是正值
          * */
         perspectiveMatrix = glm::perspective(glm::radians(10.0f),
-                                             (float)APP.getWidth() / (float)APP.getHeight(),
+                                             (float) APP.getWidth() / (float) APP.getHeight(),
                                              0.1f, 1000.f);
 
         INFO(glm::to_string(perspectiveMatrix[0]));
