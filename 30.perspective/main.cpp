@@ -45,10 +45,12 @@ void OnKeyBoard(GLFWwindow *window, int key, int scancode, int action, int mode)
         }
 
         if (key == GLFW_KEY_W) {
-                z--;
-                viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f + 0.2f * (float) z),
-                                         glm::vec3(0.0f, 0.0f, 0.0f),
-                                         glm::vec3(0.0f, 1.0f, 0.0f));
+                if(1.0f + 0.2f * (float) z > 0.2) {
+                        z--;
+                        viewMatrix = glm::lookAt(glm::vec3(0.0f + 0.2f * (float) x, 0.0f, 1.0f + 0.2f * (float) z),
+                                                 glm::vec3(0.0f, 0.0f, 0.0f),
+                                                 glm::vec3(0.0f, 1.0f, 0.0f));
+                }
         }
         if (key == GLFW_KEY_S) {
                 z++;
