@@ -136,7 +136,8 @@ void prepareCamera()
 void prepareOrtho()
 {
         /* 从这里开始，ortho走的都是摄像机坐标系下 */
-        orthoMatrix = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
+        // 注意这是摄像机坐标这里的near是更靠近z轴正方向的，所以near > far
+        orthoMatrix = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, 2.0f, -2.0f);
 
         INFO(glm::to_string(orthoMatrix[0]));
         INFO(glm::to_string(orthoMatrix[1]));
