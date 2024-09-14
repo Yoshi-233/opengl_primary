@@ -17,7 +17,7 @@ std::shared_ptr<Texture> noiseTexture;
 std::shared_ptr<Texture> dogTexture;
 glm::mat4 transform{1.0f};
 glm::mat4 viewMatrix{1.0f};
-glm::mat4 orthoMatrix{1.0f};
+glm::mat4 perspectiveMatrix{1.0f};
 
 // 窗口大小改变回调函数
 void OnResize(GLFWwindow *window, int width, int height)
@@ -129,21 +129,25 @@ void prepareCamera()
          * center:当前摄像机看见的点(世界坐标)
          * up:穹顶向量
          * */
-        viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
+        viewMatrix = glm::lookAt(glm::vec3(3.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f),
                                  glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-void prepareOrtho()
+void preparePerspective()
 {
-        /* 从这里开始，ortho走的都是摄像机坐标系下 */
-        // 注意这是摄像机坐标这里的near是更靠近z轴正方向的，所以near > far
-        orthoMatrix = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, 2.0f, -2.0f);
+        /*
+         * fovy:y轴方向上的视张角，越大看的越多，看的越少越放大
+         * aspect: w/h, 一般就是模拟的屏幕值
+         * near/far:近远平面，必须是正值
+         * */
+        perspectiveMatrix = glm::perspective(glm::radians(10.0f),
+                                             (float)APP.getWidth() / (float)APP.getHeight(),
+                                             0.1f, 1000.f);
 
-        INFO(glm::to_string(orthoMatrix[0]));
-        INFO(glm::to_string(orthoMatrix[1]));
-        INFO(glm::to_string(orthoMatrix[2]));
-        INFO(glm::to_string(orthoMatrix[3]));
-
+        INFO(glm::to_string(perspectiveMatrix[0]));
+        INFO(glm::to_string(perspectiveMatrix[1]));
+        INFO(glm::to_string(perspectiveMatrix[2]));
+        INFO(glm::to_string(perspectiveMatrix[3]));
 }
 
 void render()
@@ -159,7 +163,7 @@ void render()
         shader->setInt("dogSampler", 3);
         shader->setMatrix<decltype(transform)>("transform", transform);
         shader->setMatrix<decltype(viewMatrix)>("viewMatrix", viewMatrix);
-        shader->setMatrix<decltype(orthoMatrix)>("projectionMatrix", orthoMatrix);
+        shader->setMatrix<decltype(perspectiveMatrix)>("projectionMatrix", perspectiveMatrix);
         glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         // 这里最好解绑，这样误操作就不会影响当前vao
@@ -186,7 +190,7 @@ int main()
         prepareShader();
         prepareTexture();
         prepareCamera();
-        prepareOrtho();
+        preparePerspective();
 
         while (APP.update()) {
                 render();
