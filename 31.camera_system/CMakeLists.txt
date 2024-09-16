@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-set(PROJ_NAME "perspective")
+set(PROJ_NAME "camera_system")
 project(${PROJ_NAME})
 
 # 外部资源copy cmake
