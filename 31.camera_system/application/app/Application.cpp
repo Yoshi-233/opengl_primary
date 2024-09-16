@@ -77,6 +77,7 @@ bool Application::init(const unsigned int &&width, const unsigned int &&height, 
         glfwSetKeyCallback(this->mWindow, keyCallback);
         glfwSetMouseButtonCallback(this->mWindow, mouseButtonCallback);
         glfwSetCursorPosCallback(this->mWindow, cursorPosCallback);
+        glfwSetScrollCallback(this->mWindow, scrollCallback);
 
         return true;
 }
@@ -168,6 +169,18 @@ void Application::cursorPosCallback(GLFWwindow *window, double xpos, double ypos
 
         if (self->mCursorPosCallback) {
                 self->mCursorPosCallback(xpos, ypos);
+        }
+}
+
+void Application::scrollCallback(GLFWwindow *window, double xoffset, double yoffset)
+{
+        auto self = static_cast<Application *>(glfwGetWindowUserPointer(window));
+        if (self == nullptr) {
+                return;
+        }
+
+        if (self->mScrollCallback) {
+                self->mScrollCallback(yoffset);
         }
 }
 

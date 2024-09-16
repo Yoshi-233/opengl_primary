@@ -14,6 +14,7 @@ TrackballCameraController::~TrackballCameraController()
 void TrackballCameraController::onCursor(double xPos, double yPos)
 {
         if (this->mCamera == nullptr) {
+                ERROR("camera is nullptr");
                 return;
         }
 
@@ -69,4 +70,14 @@ void TrackballCameraController::pitch(float angle)
         // 下面不需要，因为绕着mRight旋转，mRight不会改变
         // this->mCamera->mRight = rotateMatrix * glm::vec4(this->mCamera->mRight, 0);
         // INFO(glm::to_string(this->mCamera->mRight));
+}
+
+void TrackballCameraController::onScroll(float offset)
+{
+        if (this->mCamera == nullptr) {
+                ERROR("camera is nullptr");
+                return;
+        }
+
+        this->mCamera->scale(offset * this->mScrollSpeed);
 }

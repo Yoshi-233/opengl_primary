@@ -6,6 +6,7 @@
 #include "common/include/common.h"
 
 #include "application/camera/include/camera.h"
+#include "application/camera/include/orthographicCamera.h"
 #include "application/camera/include/perspectiveCamera.h"
 #include "application/camera/include/trackballCameraController.h"
 
@@ -21,8 +22,8 @@ std::shared_ptr<Texture> noiseTexture;
 std::shared_ptr<Texture> dogTexture;
 glm::mat4 transform{1.0f};
 
-std::unique_ptr<PerspectiveCamera> camera;
-std::shared_ptr<TrackballCameraController> trackballCameraController;
+std::unique_ptr<Camera> camera;
+std::shared_ptr<CameraControl> cameraControl;
 
 // 窗口大小改变回调函数
 void OnResize(int width, int height)
@@ -46,7 +47,7 @@ void OnKeyBoard(GLFWwindow *window, int key, int scancode, int action, int mode)
                 glfwSetWindowShouldClose(window, GLFW_TRUE);
         }
 
-        trackballCameraController->onKey(key, action, mode);
+        cameraControl->onKey(key, action, mode);
 }
 
 void OnMouse(int button, int action, int mods)
@@ -55,12 +56,17 @@ void OnMouse(int button, int action, int mods)
         auto yPos = std::make_shared<double>();
         APP.getCursorPos(xPos.get(), yPos.get());
 
-        trackballCameraController->onMouse(button, action, *xPos, *yPos);
+        cameraControl->onMouse(button, action, *xPos, *yPos);
 }
 
 void OnCursorPos(double xpos, double ypos)
 {
-        trackballCameraController->onCursor(xpos, ypos);
+        cameraControl->onCursor(xpos, ypos);
+}
+
+void OnScroll(double yoffset)
+{
+        cameraControl->onScroll(static_cast<float>(yoffset));
 }
 
 
@@ -146,12 +152,18 @@ void prepareTexture()
 
 void prepareCamera()
 {
-        camera = std::make_unique<PerspectiveCamera>(60.0f,
-                                                     (float) APP.getWidth() / (float) APP.getHeight(),
-                                                     0.1f, 1000.f);
+        // camera = std::make_unique<PerspectiveCamera>(60.0f,
+        //                                              (float) APP.getWidth() / (float) APP.getHeight(),
+        //                                              0.1f, 1000.f);
 
-        trackballCameraController = std::make_shared<TrackballCameraController>();
-        trackballCameraController->setCamera(camera.get());
+        // 注意必须包含相机和图像
+        int size = 6.0f;
+        camera = std::make_unique<OrthographicCamera>(-size, size,
+                                                      -size, size,
+                                                      size, -size);
+
+        cameraControl = std::make_shared<TrackballCameraController>();
+        cameraControl->setCamera(camera.get());
 }
 
 void render()
@@ -186,6 +198,7 @@ int main()
         APP.setKeyCallback(OnKeyBoard);
         APP.setMouseButtonCallback(OnMouse);
         APP.setCursorPosCallback(OnCursorPos);
+        APP.setScrollCallback(OnScroll);
 
         // opengl渲染的区域
         GL_CHECK_ERR(glViewport(0, 0, 800, 600));
@@ -198,7 +211,7 @@ int main()
         prepareCamera();
 
         while (APP.update()) {
-                trackballCameraController->update();
+                cameraControl->update();
                 render();
                 // 绘制代码
         }

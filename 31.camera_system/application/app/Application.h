@@ -19,6 +19,7 @@ using ResizeCallback = void (*)(int, int);
 using KeyCallback = void (*)(GLFWwindow *, int, int, int, int);
 using MouseButtonCallback = void (*)(int, int, int);
 using CursorPosCallback = void (*)(double, double);
+using ScrollCallback = void (*)(double);
 
 class Application {
 public:
@@ -57,6 +58,9 @@ public:
         void setCursorPosCallback(CursorPosCallback callback)
         { mCursorPosCallback = callback; }
 
+        void setScrollCallback(ScrollCallback callback)
+        { mScrollCallback = callback; }
+
         static void test();
 
 private:
@@ -77,6 +81,7 @@ private:
         KeyCallback mKeyCallback{nullptr};
         MouseButtonCallback mMouseButtonCallback{nullptr};
         CursorPosCallback mCursorPosCallback{nullptr};
+        ScrollCallback mScrollCallback{nullptr};
 
         // 这里必须是static的，否则是类内调用了
         static void resizeCallback(GLFWwindow *window, int width, int height);
@@ -86,6 +91,8 @@ private:
         static void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
 
         static void cursorPosCallback(GLFWwindow *window, double xpos, double ypos);
+
+        static void scrollCallback(GLFWwindow *window, double xoffset, double yoffset);
 
 private:
         /* 初始化函数 */

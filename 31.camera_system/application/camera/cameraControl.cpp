@@ -69,5 +69,15 @@ void CameraControl::setSensitivity(float sensitivity)
 
 }
 
+void CameraControl::onScroll(float offset)
+{
+
+}
+
+void CameraControl::setScrollSpeed(float speed)
+{
+        this->mScrollSpeed = speed;
+}
+
 CameraControl::CameraControl()
 = default;

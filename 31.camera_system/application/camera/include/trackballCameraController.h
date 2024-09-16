@@ -14,6 +14,7 @@ public:
         ~TrackballCameraController() override;
 public:
         void onCursor(double xPos, double yPos) override;
+        void onScroll(float offset) override;
 private:
         void pitch(float angle);
         void yaw(float angle);

@@ -20,6 +20,8 @@ public:
 
         virtual void onCursor(double xPos, double yPos);
 
+        virtual void onScroll(float offset);
+
         /* 处理键盘事件 */
         virtual void onKey(int key, int action, int mods);
 
@@ -31,6 +33,8 @@ public:
         void setCamera(Camera *camera);
 
         void setSensitivity(float sensitivity);
+
+        void setScrollSpeed(float speed);
 protected:
         /* 鼠标按键状态 */
         bool mLeftMouseDown = false;
@@ -49,6 +53,9 @@ protected:
 protected:
         /* 存储当前控制的相机 */
         Camera *mCamera{nullptr};
+protected:
+        /* 记录鼠标滚轮的偏移量 */
+        float mScrollSpeed = 0.2f;
 
 };
 

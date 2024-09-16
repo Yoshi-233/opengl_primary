@@ -17,3 +17,12 @@ glm::mat4 PerspectiveCamera::getProjectionMatrix() const
         return glm::perspective(glm::radians(this->mFov), this->mAspect,
                                 this->mNear, this->mFar);
 }
+
+void PerspectiveCamera::scale(float deltaScale)
+{
+        auto front = glm::cross(this->mUp, this->mRight);
+        this->mPosition += front * deltaScale;
+}
+
+PerspectiveCamera::~PerspectiveCamera()
+= default;
