@@ -5,6 +5,7 @@
 #include "common/include/check_err.h"
 #include "common/include/common.h"
 
+#include "application/camera/include/camera.h"
 #include "application/camera/include/perspectiveCamera.h"
 #include "application/camera/include/trackballCameraController.h"
 
@@ -20,7 +21,7 @@ std::shared_ptr<Texture> noiseTexture;
 std::shared_ptr<Texture> dogTexture;
 glm::mat4 transform{1.0f};
 
-std::shared_ptr<PerspectiveCamera> camera;
+std::unique_ptr<PerspectiveCamera> camera;
 std::shared_ptr<TrackballCameraController> trackballCameraController;
 
 // 窗口大小改变回调函数
@@ -145,7 +146,7 @@ void prepareTexture()
 
 void prepareCamera()
 {
-        camera = std::make_shared<PerspectiveCamera>(60.0f,
+        camera = std::make_unique<PerspectiveCamera>(60.0f,
                                                      (float) APP.getWidth() / (float) APP.getHeight(),
                                                      0.1f, 1000.f);
 

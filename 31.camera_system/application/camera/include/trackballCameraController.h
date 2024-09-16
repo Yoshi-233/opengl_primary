@@ -17,6 +17,8 @@ public:
 private:
         void pitch(float angle);
         void yaw(float angle);
+private:
+        float mMoveSpeed = 0.005f;
 };
 
 #endif //CAMERA_SYSTEM_TRACKBALLCAMERACONTROLLER_H

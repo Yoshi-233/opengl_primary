@@ -10,9 +10,6 @@ CameraControl::~CameraControl()
 
 void CameraControl::onMouse(int button, int action, double xPos, double yPos)
 {
-        INFO("mouse button: {}, action: {}", button, action);
-        INFO("mouse position: ({}, {})", xPos, yPos);
-
         /* 1. 判断当前按键是否按下 */
         bool isPressed = (action == GLFW_PRESS);
 
@@ -36,8 +33,6 @@ void CameraControl::onMouse(int button, int action, double xPos, double yPos)
                 default:
                         break;
         }
-
-        INFO("left mouse down: {}, right mouse down: {}, middle mouse down: {}", this->mLeftMouseDown, this->mRightMouseDown, this->mMiddleMouseDown);
 }
 
 void CameraControl::onCursor(double xPos, double yPos)
@@ -66,7 +61,7 @@ void CameraControl::update()
 
 void CameraControl::setCamera(Camera *camera)
 {
-
+        this->mCamera = camera;
 }
 
 void CameraControl::setSensitivity(float sensitivity)
@@ -75,6 +70,4 @@ void CameraControl::setSensitivity(float sensitivity)
 }
 
 CameraControl::CameraControl()
-{
-
-}
+= default;
