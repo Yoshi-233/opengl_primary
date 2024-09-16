@@ -3,7 +3,8 @@
 #include <iostream>
 
 // 窗口大小改变回调函数
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
         glViewport(0, 0, width, height);
 }
 
@@ -17,14 +18,16 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
  * int action：键的动作，如按下或释放
  * int mode：当前窗口的输入模式， 如shift、ctrl等
  * */
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode) {
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode)
+{
         if ((key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) ||
             (key == GLFW_KEY_C && action == GLFW_RELEASE && mode == GLFW_MOD_CONTROL)) {
                 glfwSetWindowShouldClose(window, GLFW_TRUE);
         }
 }
 
-int main() {
+int main()
+{
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
