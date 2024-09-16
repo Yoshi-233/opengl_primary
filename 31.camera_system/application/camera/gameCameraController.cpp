@@ -61,24 +61,28 @@ void GameCameraController::update()
         auto front = glm::cross(this->mCamera->mUp, this->mCamera->mRight);
         auto right = this->mCamera->mRight;
 
-        if(this->mKeyMap[GLFW_KEY_W]) {
+        if (this->mKeyMap[GLFW_KEY_W]) {
                 direction += front;
         }
 
-        if(this->mKeyMap[GLFW_KEY_S]) {
+        if (this->mKeyMap[GLFW_KEY_S]) {
                 direction -= front;
         }
 
-        if(this->mKeyMap[GLFW_KEY_A]) {
+        if (this->mKeyMap[GLFW_KEY_A]) {
                 direction -= right;
         }
 
-        if(this->mKeyMap[GLFW_KEY_D]) {
+        if (this->mKeyMap[GLFW_KEY_D]) {
                 direction += right;
         }
 
+        if (this->mKeyMap[GLFW_KEY_SPACE]) {
+                direction += this->mCamera->mUp;
+        }
+
         // 此时direction有可能为0
-        if(glm::length(direction) != 0.0f) {
+        if (glm::length(direction) != 0.0f) {
                 direction = glm::normalize(direction);
                 this->mCamera->mPosition += direction * this->mSpeed;
         }

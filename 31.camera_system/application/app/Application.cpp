@@ -2,9 +2,8 @@
 // Created by Shaozheming on 2024/8/18.
 //
 
+#include "core.h"
 #include "Application.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include "check_err.h"
 
 std::unique_ptr<Application> Application::mInstance = nullptr;
@@ -144,7 +143,7 @@ void Application::keyCallback(GLFWwindow *window, int key, int scancode, int act
         }
 
         if (self->mKeyCallback) {
-                self->mKeyCallback(window, key, scancode, action, mods);
+                self->mKeyCallback(key, scancode, action, mods);
         }
 }
 
@@ -187,6 +186,11 @@ void Application::scrollCallback(GLFWwindow *window, double xoffset, double yoff
 void Application::getCursorPos(double *xpos, double *ypos) const
 {
         glfwGetCursorPos(this->mWindow, xpos, ypos);
+}
+
+GLFWwindow *Application::getWindow() const
+{
+        return this->mWindow;
 }
 
 

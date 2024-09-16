@@ -41,13 +41,8 @@ void OnResize(int width, int height)
  * int action：键的动作，如按下或释放
  * int mode：当前窗口的输入模式， 如shift、ctrl等
  * */
-void OnKeyBoard(GLFWwindow *window, int key, int scancode, int action, int mode)
+void OnKeyBoard(int key, int scancode, int action, int mode)
 {
-        if ((key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) ||
-            (key == GLFW_KEY_C && action == GLFW_RELEASE && mode == GLFW_MOD_CONTROL)) {
-                glfwSetWindowShouldClose(window, GLFW_TRUE);
-        }
-
         cameraControl->onKey(key, action, mode);
 }
 

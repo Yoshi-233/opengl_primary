@@ -13,3 +13,6 @@ add_library(application app/Application.cpp
         ./camera/cameraControl.cpp
         ./camera/trackballCameraController.cpp
         ./camera/gameCameraController.cpp)
+
+# 添加依赖库
+target_link_libraries(application "${PROJECT_SOURCE_DIR}/../thirdParty/lib/libglfw3.a")

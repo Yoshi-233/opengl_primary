@@ -16,7 +16,7 @@
 class GLFWwindow;
 
 using ResizeCallback = void (*)(int, int);
-using KeyCallback = void (*)(GLFWwindow *, int, int, int, int);
+using KeyCallback = void (*)(int, int, int, int);
 using MouseButtonCallback = void (*)(int, int, int);
 using CursorPosCallback = void (*)(double, double);
 using ScrollCallback = void (*)(double);
@@ -31,6 +31,7 @@ public:
         /* 成员函数setter和getter */
         [[nodiscard]] unsigned int getWidth() const; // [[nodiscard]] 提示编译器不能忽略返回值
         [[nodiscard]] unsigned int getHeight() const;
+        [[nodiscard]] GLFWwindow *getWindow() const;
 
         [[nodiscard]] const std::string &getTitle() const;
 

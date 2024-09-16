@@ -25,6 +25,6 @@ add_subdirectory(glframework)
 
 add_executable(${PROJ_NAME} main.cpp ${GLAD_PATH})
 target_link_libraries(${PROJ_NAME} libglfw3.a GL m Xrandr Xi X11 Xxf86vm pthread dl Xinerama Xcursor)
-target_link_libraries(${PROJ_NAME} common application glframework libspdlog.a)
+target_link_libraries(${PROJ_NAME} common application glframework libspdlog.a )
 
 
