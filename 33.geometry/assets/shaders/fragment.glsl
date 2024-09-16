@@ -5,7 +5,6 @@ uniform sampler2D grassSampler;
 uniform sampler2D landSampler;
 uniform sampler2D noiseSampler;
 uniform sampler2D dogSampler;
-in vec3 color;
 in vec2 uv;
 
 
