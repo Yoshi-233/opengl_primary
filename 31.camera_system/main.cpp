@@ -9,6 +9,7 @@
 #include "application/camera/include/orthographicCamera.h"
 #include "application/camera/include/perspectiveCamera.h"
 #include "application/camera/include/trackballCameraController.h"
+#include "application/camera/include/gameCameraController.h"
 
 /*
  * 1. 生成mipmap各个级别
@@ -152,17 +153,17 @@ void prepareTexture()
 
 void prepareCamera()
 {
-        // camera = std::make_unique<PerspectiveCamera>(60.0f,
-        //                                              (float) APP.getWidth() / (float) APP.getHeight(),
-        //                                              0.1f, 1000.f);
+        camera = std::make_unique<PerspectiveCamera>(60.0f,
+                                                     (float) APP.getWidth() / (float) APP.getHeight(),
+                                                     0.1f, 1000.f);
 
-        // 注意必须包含相机和图像
-        int size = 6.0f;
-        camera = std::make_unique<OrthographicCamera>(-size, size,
-                                                      -size, size,
-                                                      size, -size);
+        // // 注意必须包含相机和图像
+        // int size = 6.0f;
+        // camera = std::make_unique<OrthographicCamera>(-size, size,
+        //                                               -size, size,
+        //                                               size, -size);
 
-        cameraControl = std::make_shared<TrackballCameraController>();
+        cameraControl = std::make_shared<GameCameraController>();
         cameraControl->setCamera(camera.get());
 }
 

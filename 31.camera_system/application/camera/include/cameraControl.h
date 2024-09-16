@@ -12,7 +12,7 @@ class CameraControl {
 public:
         CameraControl();
 
-        virtual ~CameraControl();
+        ~CameraControl();
 
 public:
         /* 处理鼠标事件 */

@@ -11,7 +11,7 @@ class TrackballCameraController : public CameraControl {
 public:
         TrackballCameraController();
 
-        ~TrackballCameraController() override;
+        ~TrackballCameraController();
 public:
         void onCursor(double xPos, double yPos) override;
         void onScroll(float offset) override;

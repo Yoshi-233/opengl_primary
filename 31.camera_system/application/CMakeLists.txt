@@ -11,4 +11,5 @@ add_library(application app/Application.cpp
         ./camera/orthographicCamera.cpp
         ./camera/perspectiveCamera.cpp
         ./camera/cameraControl.cpp
-        ./camera/trackballCameraController.cpp)
+        ./camera/trackballCameraController.cpp
+        ./camera/gameCameraController.cpp)
