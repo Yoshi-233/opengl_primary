@@ -16,3 +16,4 @@ add_library(application app/Application.cpp
 
 # 添加依赖库
 target_link_libraries(application "${PROJECT_SOURCE_DIR}/../thirdParty/lib/libglfw3.a")
+target_link_libraries(application pthread)

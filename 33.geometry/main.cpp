@@ -18,7 +18,7 @@
  * 2. 修改vs随着时间变小
  * */
 
-Geometry* geometry;
+Geometry *geometry;
 std::shared_ptr<Texture> grassTexture;
 std::shared_ptr<Texture> landTexture;
 std::shared_ptr<Texture> noiseTexture;
@@ -96,6 +96,8 @@ void prepareCamera()
 
         cameraControl = std::make_shared<GameCameraController>();
         cameraControl->setCamera(camera.get());
+        // 智能指针安全向下转型
+        std::dynamic_pointer_cast<GameCameraController>(cameraControl)->setSpeed(0.5);
 }
 
 void prepareState()
